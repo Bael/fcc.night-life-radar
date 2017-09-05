@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Place } from "./place";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  places:Place[] = [{name:"harats", count:20}, {name:'brugge', count:10}];
+  
+
 }
