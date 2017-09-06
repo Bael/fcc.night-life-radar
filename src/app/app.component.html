@@ -3,21 +3,29 @@
     <h1>
         Night radar!
     </h1>
+    <span *ngIf="currentUser; else loginBlock;"> Welcome, {{currentUser}} </span>
+    <ng-template #loginBlock><button (click)="login()"> Login </button> </ng-template>
+
     <div>
-        <form action="/getTargets">
+        <div>
             <label for="searchStr">Where are you going tonight?</label>
             <input type="text" name="searchStr">
-            <button type="submit">Run radar</button>
-        </form>
+            <button (click)="getPlaces()">Run radar</button>
+        </div>
     </div>
 
-    <ol>
-        <li *ngFor="let place of places">
-            <div>
-                {{place.name}} going: {{place.count}}
-            </div>
+    <div *ngIf="places != null">
+        <ul>
+            <li *ngFor="let place of places">
+                <div>
+                    <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
+                    <span> '{{place.name}}' {{place.description}} are going: {{place.count}} </span>
+                    <button *ngIf="currentUser" (click)="goToPlace(place)"> Go!</button>
+                    <button *ngIf="currentUser" (click)="notGoToPlace(place)">UnGo!</button>
+                </div>
 
-        </li>
-    </ol>
+            </li>
+        </ul>
+    </div>
 
 </div>
