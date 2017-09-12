@@ -8,11 +8,10 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    /* Set the fixed height of the footer here */
+    /*
     height: 80px;
     line-height: 20px;
-    /* Vertically center the text there */
     background-color: #CCD4CD;
     color: #0E160D;
-    text-align: center;
+    text-align: center;*/
 }
