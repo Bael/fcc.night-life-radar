@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var placeRoute = require('./routes/place');
 var app = express();
 
+app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
