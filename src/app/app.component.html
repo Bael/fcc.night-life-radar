@@ -17,11 +17,34 @@
     <div *ngIf="places != null">
         <ul>
             <li *ngFor="let place of places">
-                <div>
-                    <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
-                    <span> '{{place.name}}' {{place.description}} are going: {{place.count}} </span>
-                    <button *ngIf="currentUser" (click)="goToPlace(place)"> Go!</button>
-                    <button *ngIf="currentUser" (click)="notGoToPlace(place)">UnGo!</button>
+                <div class="box">
+
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+
+                                <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
+
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>{{place.name}}</strong>
+                                    <br> {{place.description}}
+                                    <br>
+
+                                    <span>going: {{place.count}} </span>
+                                    <button *ngIf="currentUser" (click)="goToPlace(place)"> Go!</button>
+                                    <button *ngIf="currentUser" (click)="notGoToPlace(place)">UnGo!</button>
+
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+
+
                 </div>
 
             </li>
