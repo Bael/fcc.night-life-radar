@@ -1,15 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Place } from "./place";
-
+import { PlaceService } from "./place.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  getPlaces() : void {
-    this.places = [{name:"harats", count:20, description:"Best place to drink", url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD26b7HWdVeWE_pdhkORUtUgnnpN1-CDs4_VVFg1Wtd2nwoHSrbve4nSLH"}, 
-    {name:'brugge', count:10, description:"Best place to eat", url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNcNt5ppNb9tGV_0CJPUy39hgep1TTPwx11up1d_DSzh18AJf73q4OLYAc"}];
+export class AppComponent  {
+  constructor (private placeService : PlaceService) {}
+
+  
+  getPlaces(location:String) : void {
+
+    console.log(`get places called with location ${location}`);
+    
+    this.placeService.getPlacesByLocation(location)
+      .then(placesJson => {
+        this.places = placesJson;
+        console.log(placesJson);
+      }).catch( reason =>  {
+        console.log("error occured:\n \t " + reason)
+       }) ;
+      
+    
   }
 
   goToPlace(place:Place) :void {
