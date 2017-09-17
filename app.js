@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
+require('dotenv').config();
+
 var placeRoute = require('./routes/place');
 var app = express();
 
