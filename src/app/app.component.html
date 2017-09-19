@@ -30,9 +30,11 @@
                         <div class="media-content">
                             <div class="content">
                                 <p>
+
                                     <strong>{{place.name}}</strong>
                                     <br> {{place.description}}
-                                    <br>
+                                    <br> {{place.placeId}}
+                                    <br> {{place.uservisit}}
 
                                     <span>going: {{place.count}} </span>
                                     <button *ngIf="currentUser" (click)="goToPlace(place)"> Go!</button>

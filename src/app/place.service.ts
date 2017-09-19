@@ -14,7 +14,7 @@ export class PlaceService {
     //requestOptions.params.append("location", location);
     
     return new Promise((resolve, reject) => {
-      this.http.get(`/places?location=${location}`)
+      this.http.get(`/places?location=${location}&userId=dk`)
         .map(res => res.json())
         .subscribe(res => {
           
@@ -26,5 +26,7 @@ export class PlaceService {
         });
     });
   }
+
+  
 
 }

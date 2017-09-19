@@ -8,4 +8,6 @@ export interface Place {
     price:String;
     location:String;
     phone:String;
+    uservisit:Boolean;
+    placeId:String;
 }

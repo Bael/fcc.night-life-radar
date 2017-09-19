@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
    /// add visit for (user, place, date) touple
-function addVisit(userId, placeId, date) {
-    var db = new sqlite3.Database('./visit.db');
+function addVisit(userId, placeId, date, callback) {
+    var db = getDB();
    
     db.serialize(function() {
         db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT)");
@@ -9,22 +9,36 @@ function addVisit(userId, placeId, date) {
         var stmt = db.prepare("INSERT INTO visit (userid, placeid, visitdate) VALUES (?, ?, ?) ");
         stmt.run(userId, placeId, getDateStr(date));
         stmt.finalize();
-        
-        db.each("ScallbackELECT rowid AS id, userid, placeid, visitdate FROM visit", function(err, row) {
+        /*
+        db.each("SELECT rowid AS id, userid, placeid, visitdate FROM visit", function(err, row) {
                     //console.log(`row.id: ${row.id} userId: ${row.userid} placeId : ${row.placeId} date : ${row.visitdate}`);
                     console.log(row);
                     console.log(err);
-                });
+                });*/
     });
             
-    db.close();
+    db.close(callback);
 
+}
+
+/// Open file db and return. Possible error will be throwed ny sqllite
+function getDB() {
+    return new sqlite3.Database('./visit.db');
+}
+
+function cleanData() {
+    var db = getDB();
+
+     db.serialize(function() {
+         db.run("DROP TABLE visit");
+     });
+     db.close();
 }
 
 /// Remove user visit (not checking existed it or not)
 function removeVisit(userId, placeId, date) {
     
-        var db = new sqlite3.Database('./visit.db');
+        var db = getDB();
        
         db.serialize(function() {
             db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT)");
@@ -39,87 +53,57 @@ function removeVisit(userId, placeId, date) {
     }
     
 
-    /// Get total visit count today for place
-  function getVisitCount(placeId, date) {
-    
-        var db = new sqlite3.Database('./visit.db');
-        
-         db.serialize(function() {
-             
-            db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT) ");
-             
-             var stmt = db.prepare("select count(rowid) as visitcount from visit where placeid = ? and visitdate = ?");
-             stmt.get(placeId, getDateStr(date), (err, count) =>
-                {
-                    console.log(err);
-                    console.log("count is " + count.visitcount);
-            });
-    
-            stmt.finalize();
-    
-            
-    
-            //db.each("SELECT rowid AS id, userid, placeid, visitdate FROM visit", function(err, row) {
-            //    console.log(`row.id: ${row.id} userId: ${row.userid} placeId : ${row.placeId} date : ${row.visitdate}`);
-            //});
-             
-            
-         });
-                 
-         db.close();
-     
-    
-}
-     
-
     /// todo use set\map\dictionary
-function getPlacesOnDate(placesArray, date, callback) {
+function getPlacesOnDate(placesArray, date, userId, callback) {
+
+    console.log("userId is " + userId);
+    console.log("date is " + date);
+    console.log("placesArray " );
+    console.log(placesArray);
+    console.log(getDateStr(date));
 
     placesArray = placesArray || [];
+    var placesMap = new Map();
+    placesArray.forEach((element) => { placesMap.set(element.placeId, element)});
+    
     var newplaces = [];
-    var db = new sqlite3.Database('./visit.db');
+    var db = getDB();
     
     db.serialize(function() {
          
+
         db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT) ")
-          .each("SELECT userid, placeid FROM visit where visitdate = ?", getDateStr(date),
-        
+          .each("SELECT userid, placeid FROM visit ",
+        /*.each("SELECT userid, placeid FROM visit where visitdate = ?", getDateStr(date).trim(),*/ 
          (err, row) => {
-            placesArray.findIndex((element, index, array) => {
-                //console.log(element);
+             console.row("!!");
+             if (err)  {
+                 console.log(err);
 
-                if (element.placeId === row.placeid) {
-                   console.log("element founded");
-                   console.log(element);
-                
-                   array[index].count += 1;
-                   
-                   return true;
-                   
-               } 
-               return false;
-            });
+             } else {
+                console.log(row)   ;
 
+                let foundedPlace = placesMap.get(row.placeid);
+                if (foundedPlace) {
+                    /// given user already planning to visit place
+                    console.log('row.userid = ' + row.userid + '==? '+ (row.userid == userId));
+                    if(row.userid == userId){
+                        console.log("founded user! ");
+                        foundedPlace.uservisit = true;
+                    }
 
-             
-            //console.log(row);
-            //console.log(err);
+                    foundedPlace.count += 1;
+                }
+             }
         }); 
-
-        
-
-        //db.each("SELECT rowid AS id, userid, placeid, visitdate FROM visit", function(err, row) {
-        //    console.log(`row.id: ${row.id} userId: ${row.userid} placeId : ${row.placeId} date : ${row.visitdate}`);
-        //});
-         
         
      });
         
      //callback(placesArray);
      db.close((err) => {
-        if(!err) {
-            callback(placesArray);
-        }
+            placesMap.clear();
+            callback(err, placesArray);
+        
      });
 
      
@@ -127,28 +111,29 @@ function getPlacesOnDate(placesArray, date, callback) {
 
 }
 
+
 function getDateStr(date) {
     date = (date) || new Date();
-    return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 }
 
 
 
 module.exports.addVisit = addVisit;
-module.exports.getVisitCount = getVisitCount;
+module.exports.getPlacesOnDate = getPlacesOnDate;
 
-placesArray = [{placeId:"harats", count:0}, {placeId:"brugge", count:0}, {placeId:"hamburg", count:0}];
+//placesArray = [{placeId:"harats", count:0}, {placeId:"brugge", count:0}, {placeId:"hamburg", count:0}];
 
-getPlacesOnDate(placesArray, new Date(), (places) => { 
+/*
+
+getPlacesOnDate(placesArray, new Date(), "dk", (err, places) => { 
+                console.log(err);
                 console.log(places);
             }
         );
 
 
-
-//addVisit("dk","harats", new Date());
-//addVisit("dya","harats", new Date());
-//addVisit("dk","brugge", new Date());
+*/
 
 
 
