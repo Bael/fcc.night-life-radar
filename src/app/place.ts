@@ -1,7 +1,7 @@
 
 export interface Place {
     name:String;
-    count:Number;
+    count:number;
     description:String;
     url:String;
     coordinates:Object;

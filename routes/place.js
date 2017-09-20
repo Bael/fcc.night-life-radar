@@ -3,18 +3,24 @@ var router = express.Router();
 let request = require('request');
 let visit = require("../models/visit");
 
-router.post('/:placeid', function(req, res, next) {
-  let userid = req.body.userId;
-  let placeId = req.params.placeId;
-  let date = new Date();
+router.post('/', function(req, res, next) {
+  let userId = req.body.userId;
+  let placeId = req.body.placeId;
+  let date = new Date(req.body.date);
+
+
+  console.log(req.body);
+  //let date = new Date();
 
   visit.addVisit(userId, placeId, date, (err) => {
     if(err) {
+      console.log(err);
+
       res.status(500);
       
     } else {
       res.status(200);
-      res.send("OK")
+      res.json("OK")
     }
 
     res.end();

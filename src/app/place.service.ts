@@ -27,6 +27,23 @@ export class PlaceService {
     });
   }
 
+
+
+  goToPlace(placeId:String, userId:String, date:Date) : Promise<any> {
+    //let requestOptions = new RequestOptions();
+    //requestOptions.params.append("location", location);
+    let body = {placeId, userId, date};
+    return new Promise((resolve, reject) => {
+      this.http.post(`/places`, body)
+        .map(res => res.json())
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
   
 
 }

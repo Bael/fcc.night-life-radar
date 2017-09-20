@@ -37,7 +37,7 @@
                                     <br> {{place.uservisit}}
 
                                     <span>going: {{place.count}} </span>
-                                    <button *ngIf="currentUser" (click)="goToPlace(place)"> Go!</button>
+                                    <button *ngIf="currentUser && !place.uservisit" (click)="goToPlace(place)"> Go!</button>
                                     <button *ngIf="currentUser" (click)="notGoToPlace(place)">UnGo!</button>
 
                                 </p>

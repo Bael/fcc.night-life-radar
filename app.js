@@ -9,7 +9,7 @@ require('dotenv').config();
 var placeRoute = require('./routes/place');
 var app = express();
 
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
