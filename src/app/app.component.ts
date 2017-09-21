@@ -33,19 +33,35 @@ export class AppComponent  {
     .then(result => {
       console.log("success go");
       place.count += 1;
+      place.uservisitid = result;
+      place.uservisit = true;
 
       
     }).catch( reason =>  {
       console.log("error occured:\n \t " + reason)
      }) ;
     
-    //place.count = place.count.valueOf() + 1;
+    
 
   }
 
 
   notGoToPlace(place:Place) :void {
-    place.count = place.count.valueOf() - 1;
+    let userId : String = this.userService.getCurrentUserId();
+    this.placeService.unGoToPlace(place.uservisitid)
+    .then(result => {
+      console.log("success ungo");
+      place.count -= 1;
+      place.uservisit = false;
+      place.uservisitid = null;
+
+      
+    }).catch( reason =>  {
+      console.log("error occured:\n \t " + reason)
+     }) ;
+    
+    
+    
 
   }
 

@@ -45,5 +45,16 @@ export class PlaceService {
   }
 
   
+  unGoToPlace(uservisitid:String) : Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.delete(`/places/visit/` + uservisitid)
+        .map(res => res.json())
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
 
 }

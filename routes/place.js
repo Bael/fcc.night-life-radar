@@ -12,7 +12,29 @@ router.post('/', function(req, res, next) {
   console.log(req.body);
   //let date = new Date();
 
-  visit.addVisit(userId, placeId, date, (err) => {
+
+  visit.addVisit(userId, placeId, date, (err, rowId) => {
+    if(err) {
+      console.log(err);
+
+      res.status(500);
+      
+    } else {
+      res.status(200);
+      res.json(rowId)
+    }
+
+    res.end();
+
+  })
+});
+
+router.delete('/visit/:visitid', function(req, res, next) {
+  let uservisitid = req.params.visitid;
+  
+
+  
+  visit.removeVisit(uservisitid, (err) => {
     if(err) {
       console.log(err);
 
@@ -27,6 +49,8 @@ router.post('/', function(req, res, next) {
 
   })
 });
+
+
 router.get('/', function(req, res, next) {
   
   var auth = {
@@ -60,6 +84,7 @@ router.get('/', function(req, res, next) {
                                                               location:item.location,
                                                               phone:item.phone,
                                                               uservisit:false,
+                                                              uservisitid:""
                                                             } 
                                                           }
                                                           );

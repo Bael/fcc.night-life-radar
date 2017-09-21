@@ -10,7 +10,13 @@ function addVisit(userId, placeId, date, callback) {
         db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT)");
         
         var stmt = db.prepare("INSERT INTO visit (userid, placeid, visitdate) VALUES (?, ?, ?) ");
-        stmt.run(userId, placeId, getDateStr(date));
+        stmt.run(userId, placeId, getDateStr(date), function (err, lastID) {
+            if(err) {
+                callback(err);
+            } else {
+                callback(null, this.lastID);
+            }
+        });
         stmt.finalize();
         
         /*db.each("SELECT rowid AS id, userid, placeid, visitdate FROM visit", function(err, row) {
@@ -20,9 +26,7 @@ function addVisit(userId, placeId, date, callback) {
                 });*/
     });
             
-    db.close((err) => { 
-                console.log(err); callback(err); 
-            });
+    db.close();
 
 }
 
@@ -41,19 +45,20 @@ function cleanData() {
 }
 
 /// Remove user visit (not checking existed it or not)
-function removeVisit(userId, placeId, date) {
+function removeVisit(uservisitid, callback) {
     
-        var db = getDB();
-       
+       var db = getDB();
+       console.log(uservisitid);
+
         db.serialize(function() {
             db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT)");
             
-            var stmt = db.prepare("delete from visit where userid = ? and placeid = ? and visitdate = ? ");
-            stmt.run(userId, placeId, getDateStr(date));
+            var stmt = db.prepare("delete from visit where  rowid = ? ");
+            stmt.run(uservisitid);
             stmt.finalize();
         });
                 
-        db.close();
+        db.close(callback);
     
     }
     
@@ -78,10 +83,10 @@ function getPlacesOnDate(placesArray, date, userId, callback) {
          
 
         db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT) ")
-          .each("SELECT userid, placeid FROM visit ",
+          .each("SELECT rowid as rowid, userid, placeid FROM visit ",
         /*.each("SELECT userid, placeid FROM visit where visitdate = ?", getDateStr(date).trim(),*/ 
          (err, row) => {
-             //console.log("!!");
+             
              if (err)  {
                  console.log(err);
 
@@ -95,6 +100,7 @@ function getPlacesOnDate(placesArray, date, userId, callback) {
                     if(row.userid == userId){
                       //  console.log("founded user! ");
                         foundedPlace.uservisit = true;
+                        foundedPlace.uservisitid = row.rowid;
                     }
 
                     foundedPlace.count += 1;
@@ -126,7 +132,7 @@ function getDateStr(date) {
 
 module.exports.addVisit = addVisit;
 module.exports.getPlacesOnDate = getPlacesOnDate;
-
+module.exports.removeVisit = removeVisit;
 //addVisit("dk", "little-red-door-paris", new Date());
 
 //placesArray = [{placeId:"harats", count:0}, {placeId:"brugge", count:0}, {placeId:"hamburg", count:0}];

@@ -9,5 +9,6 @@ export interface Place {
     location:String;
     phone:String;
     uservisit:Boolean;
+    uservisitid:String;
     placeId:String;
 }
