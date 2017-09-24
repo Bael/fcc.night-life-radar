@@ -14,7 +14,7 @@ export class PlaceService {
     //requestOptions.params.append("location", location);
     
     return new Promise((resolve, reject) => {
-      this.http.get(`/places?location=${location}&userId=dk`)
+      this.http.get(`/visits?location=${location}&userId=dk`)
         .map(res => res.json())
         .subscribe(res => {
           
@@ -34,7 +34,7 @@ export class PlaceService {
     //requestOptions.params.append("location", location);
     let body = {placeId, userId, date};
     return new Promise((resolve, reject) => {
-      this.http.post(`/places`, body)
+      this.http.post(`/visits/new`, body)
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);
@@ -47,7 +47,7 @@ export class PlaceService {
   
   unGoToPlace(uservisitid:String) : Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.delete(`/places/visit/` + uservisitid)
+      this.http.delete(`/visits/` + uservisitid)
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);

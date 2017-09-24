@@ -63,14 +63,8 @@ function removeVisit(uservisitid, callback) {
     }
     
 
-    /// todo use set\map\dictionary
-function getPlacesOnDate(placesArray, date, userId, callback) {
-
-   // console.log("userId is " + userId);
-    //console.log("date is " + date);
-    //console.log("placesArray " );
-   // console.log(placesArray);
-   // console.log(getDateStr(date));
+    /// Get visit info from given places array. 
+function getVisitedPlacesOnDate(placesArray, date, userId, callback) {
 
     placesArray = placesArray || [];
     var placesMap = new Map();
@@ -80,29 +74,21 @@ function getPlacesOnDate(placesArray, date, userId, callback) {
     var db = getDB();
     
     db.serialize(function() {
-         
-
         db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT) ")
-          .each("SELECT rowid as rowid, userid, placeid FROM visit ",
-        /*.each("SELECT userid, placeid FROM visit where visitdate = ?", getDateStr(date).trim(),*/ 
+           .each("SELECT userid, placeid FROM visit where visitdate = ?", getDateStr(date), 
          (err, row) => {
              
              if (err)  {
                  console.log(err);
-
+                 return callback(err);
              } else {
-              //  console.log(row)   ;
-
                 let foundedPlace = placesMap.get(row.placeid);
                 if (foundedPlace) {
                     /// given user already planning to visit place
-                   // console.log('row.userid = ' + row.userid + '==? '+ (row.userid == userId));
                     if(row.userid == userId){
-                      //  console.log("founded user! ");
                         foundedPlace.uservisit = true;
                         foundedPlace.uservisitid = row.rowid;
                     }
-
                     foundedPlace.count += 1;
                 }
              }
@@ -117,9 +103,6 @@ function getPlacesOnDate(placesArray, date, userId, callback) {
         
      });
 
-     
- 
-
 }
 
 
@@ -128,26 +111,25 @@ function getDateStr(date) {
     return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 }
 
+function prepareDB() {
+    var db = getDB(); 
+    
+    db.serialize(function() {
+         
+        db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT) ");
+        db.run("CREATE INDEX IF NOT EXISTS visitdate_index_name ON visit (visitdate DESC) ");
+        
+         
+     });
+     db.close();
 
+}
 
 module.exports.addVisit = addVisit;
-module.exports.getPlacesOnDate = getPlacesOnDate;
+module.exports.getVisitedPlacesOnDate = getVisitedPlacesOnDate;
 module.exports.removeVisit = removeVisit;
-//addVisit("dk", "little-red-door-paris", new Date());
-
-//placesArray = [{placeId:"harats", count:0}, {placeId:"brugge", count:0}, {placeId:"hamburg", count:0}];
-
-/*
-
-getPlacesOnDate(placesArray, new Date(), "dk", (err, places) => { 
-                console.log(err);
-                console.log(places);
-            }
-        );
-
-
-*/
-
+module.exports.prepareDB = prepareDB;
+module.exports.cleanData = cleanData;
 
 
 
@@ -183,16 +165,5 @@ function execStatement(statementFunction, args, callback) {
 
 
 
-function prepareDB() {
-    var db = new sqlite3.Database('./visit.db');
-    
-    db.serialize(function() {
-         
-        db.run("CREATE TABLE IF NOT EXISTS visit (userid TEXT, placeid TEXT, visitdate TEXT) ");
-        db.run("CREATE INDEX IF NOT EXISTS visitdate_index_name ON visit (visitdate DESC) ");
-         
-     });
-     db.close();
-
-}*/
+*/
 

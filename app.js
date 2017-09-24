@@ -3,19 +3,16 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-
 require('dotenv').config();
 
-var placeRoute = require('./routes/place');
+var visitRouter = require('./server/routes/visit');
 var app = express();
-
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
-
-app.use('/places', placeRoute);
+app.use('/visits', visitRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
