@@ -6,6 +6,7 @@ function getPlacesByLocation(location, callback) {
       bearer: process.env.ACCESS_TOKEN
     }
   }
+  console.log(auth);
 
   var url = `https://api.yelp.com/v3/businesses/search?location=${location}&categories=nightlife`;
 
