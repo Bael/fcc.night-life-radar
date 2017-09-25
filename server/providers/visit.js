@@ -27,13 +27,13 @@ function getDB() {
     return new sqlite3.Database('./visit.db');
 }
 
-function cleanData() {
+function cleanData(callback) {
     var db = getDB();
 
     db.serialize(function () {
         db.run("DROP TABLE visit");
     });
-    db.close();
+    db.close(callback);
 }
 
 // Remove user visit (not checking existed it or not)
