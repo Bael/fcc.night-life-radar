@@ -1,59 +1,111 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-    <h1>
-        Night radar!
-    </h1>
-    <span *ngIf="currentUser; else loginBlock;"> Welcome, {{currentUser}} </span>
-    <ng-template #loginBlock><button (click)="login()"> Login </button> </ng-template>
 
-    <div>
-        <div>
-            <label for="searchStr">Where are you going tonight?</label>
-            <input type="text" name="searchStr" #searchStr>
-            <button (click)="getPlaces(searchStr.value)">Run radar</button>
-        </div>
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head ">
+        <header class="nav ">
+            <div class="container ">
+                <div class="nav-right">
+                    <a class="nav-item">
+                        <span *ngIf="currentUser">Welcome, {{currentUser}} </span>
+
+
+                        <button class="button is-primary is-inverted" *ngIf="!currentUser" (click)="login()">Login</button>
+
+                    </a>
+                </div>
+            </div>
+
+        </header>
     </div>
 
-    <div *ngIf="places != null">
-        <ul>
-            <li *ngFor="let place of places">
-                <div class="box">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                Night life radar.
+            </h1>
+            <h2 class="subtitle">
+                Plans tonight? Enter location and see places to go.
+            </h2>
 
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-64x64">
-
-                                <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
-
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-
-                                    <strong>{{place.name}}</strong>
-                                    <br> {{place.description}}
-                                    <br> {{place.placeId}}
-                                    <br> {{place.uservisit}}
-
-                                    <span>going: {{place.count}} </span>
-                                </p>
-                                <div *ngIf="currentUser">
-                                    <button [hidden]="place.uservisit" (click)="goToPlace(place)"> Go!</button>
-                                    <button [hidden]="!place.uservisit" (click)="notGoToPlace(place)">UnGo!</button>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </article>
-
-
-
+            <div>
+                <div class="field">
+                    <label class="label">Enter location</label>
+                    <div class="control">
+                        <input class="input" name="searchStr" #searchStr type="text" placeholder="e.g. New York" accesskey="Enter">
+                        <p class="help">location to find places, city and street</p>
+                        <button class="button is-warning" (click)="getPlaces(searchStr.value)">Radar, search!</button> </div>
                 </div>
 
-            </li>
-        </ul>
-    </div>
+            </div>
 
-</div>
+
+
+            <div *ngIf="places != null">
+                <ul>
+                    <li *ngFor="let place of places">
+                        <div class="box">
+
+                            <article class="media">
+                                <div class="media-left">
+                                    <div class="field is-grouped is-grouped-multiline">
+                                        <div class="control">
+                                            <div class="tags has-addons">
+                                                <span class="tag is-dark">rating</span>
+                                                <span class="tag is-info">{{place.rating}}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="control">
+                                            <div class="tags has-addons">
+                                                <span class="tag is-dark">price</span>
+                                                <span class="tag is-success">{{place.price}}</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!--figure class="image is-64x64">
+
+                                        <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
+
+                                    </figure-->
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+
+
+                                        <strong>{{place.name}}</strong>
+                                        <br> {{place.description}}
+                                        <br> {{place.placeId}}
+                                        <br> {{place.uservisit}}
+
+                                        <div class="control">
+                                            <div class="tags has-addons">
+                                                <span class="tag is-dark">going</span>
+                                                <span class="tag is-success">{{place.count}}</span>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div *ngIf="currentUser ">
+                                            <button *ngIf="!place.uservisit" class="button is-warning " (click)="goToPlace(place) "> Go!</button>
+                                            <button *ngIf="place.uservisit" class="button is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
+                                        </div>
+
+                                        <button class="button is-info">Open place card</button>
+
+                                    </div>
+                                </div>
+                            </article>
+
+
+
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
