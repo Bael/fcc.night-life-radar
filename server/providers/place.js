@@ -16,6 +16,10 @@ function getPlacesByLocation(location, callback) {
       } else {
 
         let rawarray = JSON.parse(result.body).businesses;
+        if(!rawarray) {
+          return callback(new Error("no data about places"));
+        }
+        
         let placesarray = rawarray.map(item => {
           return {
             placeId: item.id,
