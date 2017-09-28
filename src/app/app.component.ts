@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Place } from "./place";
 import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
+import { Router } from "@angular/router";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
-  constructor (private placeService : PlaceService, private userService : UserService) {}
+  constructor (private placeService : PlaceService, private userService : UserService, private router : Router) {}
 
   
   getPlaces(location:String) : void {
@@ -24,6 +26,10 @@ export class AppComponent  {
        });
       
     
+  }
+
+  gotoDetail(place): void {
+    this.router.navigate(['/cards', place.placeId],  {skipLocationChange: true});
   }
 
   goToPlace(place:Place) :void {

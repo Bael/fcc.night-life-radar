@@ -4,6 +4,11 @@
     <div class="hero-head ">
         <header class="nav ">
             <div class="container ">
+                <div>
+                    <nav>
+                    </nav>
+                    <router-outlet></router-outlet>
+                </div>
                 <div class="nav-right">
                     <a class="nav-item">
                         <span *ngIf="currentUser">Welcome, {{currentUser}} </span>
@@ -12,6 +17,7 @@
                         <button class="button is-primary is-inverted" *ngIf="!currentUser" (click)="login()">Login</button>
 
                     </a>
+
                 </div>
             </div>
 
@@ -45,9 +51,12 @@
                     <li *ngFor="let place of places">
                         <div class="box">
 
+
                             <article class="media">
                                 <div class="media-left">
                                     <div class="field is-grouped is-grouped-multiline">
+
+
                                         <div class="control">
                                             <div class="tags has-addons">
                                                 <span class="tag is-dark">rating</span>
@@ -93,7 +102,7 @@
                                             <button *ngIf="place.uservisit" class="button is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
                                         </div>
 
-                                        <button class="button is-info">Open place card</button>
+                                        <button (click)="gotoDetail(place)" class="button is-info">Open place card</button>
 
                                     </div>
                                 </div>

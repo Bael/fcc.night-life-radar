@@ -9,6 +9,19 @@ export class PlaceService {
 
   constructor(private http: Http) { }
 
+   getBusinessInfo(id) : Promise<Place> {
+    return new Promise((resolve, reject) => {
+    
+    
+      let place:Place = {     
+                              placeId:"1", name:"piazza", count:0,description:"",url:"", 
+                              coordinates:"", price:"", location:"",phone:"",uservisit:true, uservisitid:"",
+                        };
+      resolve(place);
+    
+    });
+  }
+
   getPlacesByLocation(location:String) : Promise<Place[]> {
     //let requestOptions = new RequestOptions();
     //requestOptions.params.append("location", location);
