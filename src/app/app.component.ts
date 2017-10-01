@@ -12,7 +12,7 @@ import { Router } from "@angular/router";
 export class AppComponent  {
   constructor (private placeService : PlaceService, private userService : UserService, private router : Router) {}
 
-  
+   /*
   getPlaces(location:String) : void {
 
     console.log(`get places called with location ${location}`);
@@ -29,7 +29,7 @@ export class AppComponent  {
   }
 
   gotoDetail(place): void {
-    this.router.navigate(['/cards', place.placeId],  {skipLocationChange: true});
+    this.router.navigate(['/cards', place.placeId],  {skipLocationChange: false});
   }
 
   goToPlace(place:Place) :void {
@@ -70,6 +70,7 @@ export class AppComponent  {
     
 
   }
+  */
 
   currentUser = null;
 

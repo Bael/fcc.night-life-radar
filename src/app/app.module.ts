@@ -4,19 +4,28 @@ import { Http, Headers, RequestOptions, HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { PlaceService } from './place.service';
 import { UserService } from './user.service';
-import { BusinessComponent } from './business.component';
+import { PlaceDetailComponent } from './place-detail.component';
 import { RouterModule }   from '@angular/router';
-
+import { PlacesComponent } from './places.component';
 @NgModule({
   declarations: [
-    AppComponent, BusinessComponent
+    AppComponent, PlaceDetailComponent, PlacesComponent
   ],
   imports: [
     BrowserModule, HttpModule,
     RouterModule.forRoot([
       {
-        path: 'cards/:id',
-        component: BusinessComponent
+        path: 'cardsdetail/:id',
+        component: PlaceDetailComponent
+      },
+      {
+        path: 'cards',
+        component: PlacesComponent
+      },
+      {
+        path: '',
+        redirectTo: 'cards',
+        pathMatch: 'full'
       }
     ])
   ],

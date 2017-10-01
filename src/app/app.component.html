@@ -7,7 +7,7 @@
                 <div>
                     <nav>
                     </nav>
-                    <router-outlet></router-outlet>
+
                 </div>
                 <div class="nav-right">
                     <a class="nav-item">
@@ -33,7 +33,7 @@
                 Plans tonight? Enter location and see places to go.
             </h2>
 
-            <div>
+            <!--div>
                 <div class="field">
                     <label class="label">Enter location</label>
                     <div class="control">
@@ -42,11 +42,15 @@
                         <button class="button is-warning" (click)="getPlaces(searchStr.value)">Radar, search!</button> </div>
                 </div>
 
-            </div>
+            </div-->
+
+            <router-outlet></router-outlet>
 
 
 
-            <div *ngIf="places != null">
+
+
+            <!--div *ngIf="places != null">
                 <ul>
                     <li *ngFor="let place of places">
                         <div class="box">
@@ -73,11 +77,11 @@
 
                                     </div>
 
-                                    <!--figure class="image is-64x64">
+                                    <figure class="image is-64x64">
 
                                         <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
 
-                                    </figure-->
+                                    </figure>
                                 </div>
                                 <div class="media-content">
                                     <div class="content">
@@ -114,7 +118,7 @@
 
                     </li>
                 </ul>
-            </div>
+            </div-->
         </div>
     </div>
 </section>

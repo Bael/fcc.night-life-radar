@@ -14,8 +14,19 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/visits', visitRouter);
 
-app.get('/cards/:id', function(req, res, next) {
-  res.redirect("/");
+app.get('/cardsdetail/:id', function(req, res, next) {
+    res.sendFile('/public/index.html');
+
+});
+
+app.get('/cards', function(req, res, next) {
+  res.sendFile('/public/index.html');
+
+});
+
+app.get('*', function(req, res, next) {
+  res.sendFile('/public/index.html');
+
 });
 
 // catch 404 and forward to error handler

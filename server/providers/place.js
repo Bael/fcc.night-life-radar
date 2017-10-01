@@ -21,13 +21,14 @@ function getPlacesByLocation(location, callback) {
         }
         
         let placesarray = rawarray.map(item => {
+          let smallImageUrl = new String(item.image_url).replace("o.jpg", "m.jpg");
           return {
             placeId: item.id,
             name: item.name,
             count: 0,
             description: item.rating + item.title,
             coordinates: item.coordinates,
-            url: item.image_url,
+            url: smallImageUrl,
             price: item.price,
             location: item.location,
             phone: item.phone,

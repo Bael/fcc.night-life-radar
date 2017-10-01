@@ -6,18 +6,18 @@ import { Location }                 from '@angular/common';
 
 import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
-
+import { Router } from "@angular/router";
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'business-info',
-  templateUrl: './business.component.html'
+  selector: 'place-detail-info',
+  templateUrl: './place-detail.component.html'
   
 })
 
-export class BusinessComponent  {
+export class PlaceDetailComponent  {
   constructor (private placeService : PlaceService, private userService : UserService,  private route: ActivatedRoute,
-    private location: Location) {}
+    private location: Location, private router : Router) {}
 
   
     ngOnInit(): void {
@@ -33,8 +33,8 @@ export class BusinessComponent  {
   placeInfo:Place;
 
   goBack(): void {
-    
-    this.location.back();
+    this.router.navigate(['/cards'],  {skipLocationChange: false});
+    //this.location.back();
   }
 
 }
