@@ -12,22 +12,9 @@ import { PlacesComponent } from './places.component';
     AppComponent, PlaceDetailComponent, PlacesComponent
   ],
   imports: [
-    BrowserModule, HttpModule,
-    RouterModule.forRoot([
-      {
-        path: 'cardsdetail/:id',
-        component: PlaceDetailComponent
-      },
-      {
-        path: 'cards',
-        component: PlacesComponent
-      },
-      {
-        path: '',
-        redirectTo: 'cards',
-        pathMatch: 'full'
-      }
-    ])
+    BrowserModule, HttpModule
+  
+   
   ],
   providers: [PlaceService, UserService],
   bootstrap: [AppComponent]

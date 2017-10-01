@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
-  constructor (private placeService : PlaceService, private userService : UserService, private router : Router) {}
+  constructor (private placeService : PlaceService, private userService : UserService) {}
 
    /*
   getPlaces(location:String) : void {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Place } from "./place";
 import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
-import { Router } from "@angular/router";
 
 @Component({
   selector: 'places',
@@ -10,13 +9,13 @@ import { Router } from "@angular/router";
   
 })
 export class PlacesComponent  {
-  constructor (private placeService : PlaceService, private userService : UserService, private router : Router) {}
+  constructor (private placeService : PlaceService, private userService : UserService) {}
 
   selectedPlace:Place = null;
  
   gotoDetail(place): void {
       console.log(place);
-      
+
     this.selectedPlace = place;
 
     //this.router.navigate(['/cardsdetail', place.placeId],  {skipLocationChange: false});
