@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Place } from "./place";
 import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
@@ -8,7 +8,7 @@ import { UserService } from "./user.service";
   templateUrl: './places.component.html'
   
 })
-export class PlacesComponent  {
+export class PlacesComponent implements OnInit {
   constructor (private placeService : PlaceService, private userService : UserService) {}
 
   selectedPlace:Place = null;
@@ -18,7 +18,6 @@ export class PlacesComponent  {
 
     this.selectedPlace = place;
 
-    //this.router.navigate(['/cardsdetail', place.placeId],  {skipLocationChange: false});
   }
 
   goToPlace(place:Place) :void {
@@ -75,7 +74,12 @@ export class PlacesComponent  {
 
   }
 
-  currentUser = "dk";
+  ngOnInit(): void {
+    this.currentUser = this.userService.getCurrentUserId();
+  }
+
+  @Input() currentUser;
+  
 
 
   places:Place[];

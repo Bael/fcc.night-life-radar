@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Place } from "./place";
 import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent  {
+export class AppComponent implements OnInit  {
   constructor (private placeService : PlaceService, private userService : UserService) {}
 
    /*
@@ -72,10 +72,18 @@ export class AppComponent  {
   }
   */
 
-  currentUser = null;
+
+  ngOnInit(): void {
+    this.currentUser = this.userService.getCurrentUserId();
+  }
+
+  @Input() currentUser = null;
+  
+
+  
 
   login() :void  {
-    this.currentUser = "Gregg";
+    this.userService.setCurrentUserId("Gregg");
   }
   
   places:Place[];
