@@ -8,32 +8,84 @@ function getPlacesByLocation(location, callback) {
   }
   
   var url = `https://api.yelp.com/v3/businesses/search?location=${location}&categories=nightlife`;
+ url = "https://api.yelp.com/v3/graphql";
+  let formData = new Object();
+  let str = `{ search(term:"nightlife", location:"${location}"), 
+  
+              { business { name, display_phone, id, url, 
+                hours {
+                        is_open_now, open {
+                            start, end
+                          }
+                          },
+                price, rating, 
+                coordinates { longitude, latitude},
+                photos, location {city, address1},
+                reviews {text, rating, time_created, url}}}}`;
 
-  request.get(url, auth,
+  formData.auth = { 'auth': {
+    bearer: process.env.ACCESS_TOKEN
+  }};
+
+  let options = {
+    url:"https://api.yelp.com/v3/graphql",
+    auth:  {
+      bearer: process.env.ACCESS_TOKEN
+    },
+    headers: {
+      "content-type":'application/graphql'
+    },
+    body:str,
+    method:"POST",
+    
+
+
+  };
+
+  formData.query = str;
+  request.post(options,
+  //request.get(url, auth,
     function (error, result) {
       if (error) {
+        console.log(error);
         callback(error);
       } else {
 
-        let rawarray = JSON.parse(result.body).businesses;
-        if(!rawarray) {
+        console.log(result);
+
+        let rawresult = JSON.parse(result.body);
+        if(!rawresult) {
           return callback(new Error("no data about places"));
         }
+
+        let rawarray = rawresult.data.search.business;
         
         let placesarray = rawarray.map(item => {
-          let smallImageUrl = new String(item.image_url).replace("o.jpg", "m.jpg");
+          let review = "";
+          if (item.reviews && item.reviews.length > 0) {
+            review = item.reviews[0].text;
+          }
+          let smallImageUrl = "";
+          
+          if(item.photos && item.photos.length>0) {
+            smallImageUrl = new String(item.photos[0]).replace("o.jpg", "m.jpg");
+          }
+
           return {
             placeId: item.id,
             name: item.name,
             count: 0,
-            description: item.rating + item.title,
+            description: review,
             coordinates: item.coordinates,
             url: smallImageUrl,
             price: item.price,
-            location: item.location,
-            phone: item.phone,
+            rating: item.rating,
+            location: item.location.city+ ", "+item.location.address1,
+            phone: item.display_phone,
             uservisit: false,
-            uservisitid: ""
+            uservisitid: "",
+            //hours:item.hours,
+
           }
         }
         );

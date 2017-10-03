@@ -49,6 +49,11 @@ router.get('/', function(req, res, next) {
   }
 
   placesProvider.getPlacesByLocation(location, (err, placesArray) => {
+    if(err) {
+      console.log(err);
+      res.json(err);
+      res.end;
+    }
     visitProvider.getVisitedPlacesOnDate(placesArray, new Date(), userId, (err, visitedPlaces) => {
       if(err) {
         res.json(err);
