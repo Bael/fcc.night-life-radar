@@ -11,7 +11,7 @@
                 </div>
                 <div class="nav-right">
                     <a class="nav-item">
-                        <span *ngIf="currentUser">Welcome, {{currentUser}} </span>
+                        <span *ngIf="currentUser">Welcome, {{currentUser.firstname}} </span>
 
 
                         <button class="button is-primary is-inverted" *ngIf="!currentUser" (click)="login()">Login</button>
@@ -45,7 +45,7 @@
             </div-->
 
             <!--router-outlet></router-outlet-->
-            <places></places>
+            <places [(currentUser)]=currentUser> </places>
 
 
 

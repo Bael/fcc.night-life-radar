@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
+import { User } from "./user";
 
 
 
 @Injectable()
 export class UserService {
 
-  currentUser = null;
+  currentUser:User = null;
 
-  getCurrentUserId() : String {
+  getCurrentUser() : User {
       return this.currentUser;
     
   }
 
-  setCurrentUserId(currentUserId) : void {
-    this.currentUser = currentUserId;
+  setCurrentUser(currentUser:User) : void {
+    this.currentUser = currentUser;
   
 }
   

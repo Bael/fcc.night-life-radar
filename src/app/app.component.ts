@@ -3,6 +3,7 @@ import { Place } from "./place";
 import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
 import { Router } from "@angular/router";
+import { User } from "./user";
 
 @Component({
   selector: 'app-root',
@@ -74,16 +75,21 @@ export class AppComponent implements OnInit  {
 
 
   ngOnInit(): void {
-    this.currentUser = this.userService.getCurrentUserId();
+    this.currentUser = this.userService.getCurrentUser();
   }
 
-  @Input() currentUser = null;
+  @Input() currentUser:User = null;
   
 
   
 
   login() :void  {
-    this.userService.setCurrentUserId("Gregg");
+    let user = new User();
+    user.id = "dk";
+    user.firstName = "Greg";
+    
+    this.userService.setCurrentUser(user);
+    this.currentUser = user;
   }
   
   places:Place[];

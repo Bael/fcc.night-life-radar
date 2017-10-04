@@ -22,7 +22,7 @@ export class PlacesComponent implements OnInit {
 
   goToPlace(place:Place) :void {
 
-    let userId : String = this.userService.getCurrentUserId();
+    let userId : String = this.userService.getCurrentUser().id;
     this.placeService.goToPlace(place.placeId, userId, new Date())
     .then(result => {
       console.log("success go");
@@ -56,7 +56,7 @@ export class PlacesComponent implements OnInit {
         
       }
   notGoToPlace(place:Place) :void {
-    let userId : String = this.userService.getCurrentUserId();
+    let userId : String = this.userService.getCurrentUser().id;
     this.placeService.unGoToPlace(place.uservisitid)
     .then(result => {
       console.log("success ungo");
@@ -75,7 +75,7 @@ export class PlacesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.userService.getCurrentUserId();
+    this.currentUser = this.userService.getCurrentUser();
   }
 
   @Input() currentUser;
