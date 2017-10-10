@@ -9,14 +9,10 @@
                 </div>
                 <div class="nav-right">
                     <a *ngIf="!user" class="nav-item">
+                        <span> Sign in: </span>
                         <button class="button is-primary is-inverted" (click)="signInWithGoogle()"><span class="fa fa-google"></span></button>
                     </a>
-
-
-
-
                     <div *ngIf="user" class="media">
-
                         <a class="nav-item">
                             <img src="{{ user.photoUrl }}">
                         </a>
@@ -29,18 +25,10 @@
                         </a>
 
                         <a class="nav-item">
-                            <button class="button is-primary is-inverted" (click)="signOut()">Sign out</button>
+                            <button class="button is-warning " (click)="signOut()">Sign out</button>
                         </a>
 
                     </div>
-
-
-
-                    <!--span *ngIf="currentUser">Welcome, {{currentUser.firstname}} </span>
-
-
-                        <button class="button is-primary is-inverted" *ngIf="!currentUser" (click)="login()">Login</button-->
-
 
 
                 </div>
@@ -55,98 +43,11 @@
                 Night life radar.
             </h1>
             <h2 class="subtitle">
-                Plans tonight? Enter location and see places to go.
+                Plans tonight? Enter location and see places to go.(Sign in for intention to go)
             </h2>
 
-            <!--div>
-                <div class="field">
-                    <label class="label">Enter location</label>
-                    <div class="control">
-                        <input class="input" name="searchStr" #searchStr type="text" placeholder="e.g. New York" accesskey="Enter">
-                        <p class="help">location to find places, city and street</p>
-                        <button class="button is-warning" (click)="getPlaces(searchStr.value)">Radar, search!</button> </div>
-                </div>
-
-
-[[kuju9iii8iuujuj4iooiol]]            </div-->
-
-            <!--router-outlet></router-outlet-->
             <places> </places>
 
-
-
-
-
-            <!--div *ngIf="places != null">yuuuk
-                
-                <ul>
-                    <li *ngFor="let place of places">
-                        <div class="box">
-
-
-                            <article class="media">
-                                <div class="media-left">
-                                    <div class="field is-grouped is-grouped-multiline">
-
-
-                                        <div class="control">
-                                            <div class="tags has-addons">
-                                                <span class="tag is-dark">rating</span>
-                                                <span class="tag is-info">{{place.rating}}</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="control">
-                                            <div class="tags has-addons">
-                                                <span class="tag is-dark">price</span>
-                                                <span class="tag is-success">{{place.price}}</span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <figure class="image is-64x64">
-
-                                        <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
-
-                                    </figure>
-                                </div>
-                                <div class="media-content">
-                                    <div class="content">
-
-
-                                        <strong>{{place.name}}</strong>
-                                        <br> {{place.description}}
-                                        <br> {{place.placeId}}
-                                        <br> {{place.uservisit}}
-
-                                        <div class="control">
-                                            <div class="tags has-addons">
-                                                <span class="tag is-dark">going</span>
-                                                <span class="tag is-success">{{place.count}}</span>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div *ngIf="currentUser ">
-                                            <button *ngIf="!place.uservisit" class="button is-warning " (click)="goToPlace(place) "> Go!</button>
-                                            <button *ngIf="place.uservisit" class="button is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
-                                        </div>
-
-                                        <button (click)="gotoDetail(place)" class="button is-info">Open place card</button>
-
-                                    </div>
-                                </div>
-                            </article>
-
-
-
-                        </div>
-
-                    </li>
-                </ul>
-            </div-->
         </div>
     </div>
 </section>

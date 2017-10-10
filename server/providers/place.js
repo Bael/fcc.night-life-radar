@@ -68,7 +68,7 @@ function getPlacesByLocation(location, callback) {
           let smallImageUrl = "";
           
           if(item.photos && item.photos.length>0) {
-            smallImageUrl = new String(item.photos[0]).replace("o.jpg", "m.jpg");
+            smallImageUrl = new String(item.photos[0]).replace("o.jpg", "ms.jpg");
           }
 
           return {
