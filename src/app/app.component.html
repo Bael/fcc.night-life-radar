@@ -1,5 +1,4 @@
 <!--The content below is only a placeholder and can be replaced.-->
-
 <section class="hero is-primary is-fullheight">
     <div class="hero-head ">
         <header class="nav ">
@@ -7,16 +6,42 @@
                 <div>
                     <nav>
                     </nav>
-
                 </div>
                 <div class="nav-right">
-                    <a class="nav-item">
-                        <span *ngIf="currentUser">Welcome, {{currentUser.firstname}} </span>
-
-
-                        <button class="button is-primary is-inverted" *ngIf="!currentUser" (click)="login()">Login</button>
-
+                    <a *ngIf="!user" class="nav-item">
+                        <button class="button is-primary is-inverted" (click)="signInWithGoogle()"><span class="fa fa-google"></span></button>
                     </a>
+
+
+
+
+                    <div *ngIf="user" class="media">
+
+                        <a class="nav-item">
+                            <img src="{{ user.photoUrl }}">
+                        </a>
+
+                        <a class="nav-item">
+                            <div class="field is-grouped is-grouped-multiline">
+                                <h4>{{ user.name }}</h4>
+                                <!--p>{{ user.email }}</p-->
+                            </div>
+                        </a>
+
+                        <a class="nav-item">
+                            <button class="button is-primary is-inverted" (click)="signOut()">Sign out</button>
+                        </a>
+
+                    </div>
+
+
+
+                    <!--span *ngIf="currentUser">Welcome, {{currentUser.firstname}} </span>
+
+
+                        <button class="button is-primary is-inverted" *ngIf="!currentUser" (click)="login()">Login</button-->
+
+
 
                 </div>
             </div>
@@ -42,16 +67,18 @@
                         <button class="button is-warning" (click)="getPlaces(searchStr.value)">Radar, search!</button> </div>
                 </div>
 
-            </div-->
+
+[[kuju9iii8iuujuj4iooiol]]            </div-->
 
             <!--router-outlet></router-outlet-->
-            <places [(currentUser)]=currentUser> </places>
+            <places> </places>
 
 
 
 
 
-            <!--div *ngIf="places != null">
+            <!--div *ngIf="places != null">yuuuk
+                
                 <ul>
                     <li *ngFor="let place of places">
                         <div class="box">

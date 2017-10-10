@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Place } from "./place";
 import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
+import { AuthService } from "angular4-social-login";
+import { GoogleLoginProvider } from "angular4-social-login";
+import { SocialUser } from "angular4-social-login";
 
 @Component({
   selector: 'places',
@@ -9,7 +12,7 @@ import { UserService } from "./user.service";
   
 })
 export class PlacesComponent implements OnInit {
-  constructor (private placeService : PlaceService, private userService : UserService) {}
+  constructor (private placeService : PlaceService, private userService : UserService, private authService:AuthService) {}
 
   selectedPlace:Place = null;
  
@@ -22,7 +25,7 @@ export class PlacesComponent implements OnInit {
 
   goToPlace(place:Place) :void {
 
-    let userId : String = this.userService.getCurrentUser().id;
+    let userId : String = this.user.id;
     this.placeService.goToPlace(place.placeId, userId, new Date())
     .then(result => {
       console.log("success go");
@@ -56,7 +59,7 @@ export class PlacesComponent implements OnInit {
         
       }
   notGoToPlace(place:Place) :void {
-    let userId : String = this.userService.getCurrentUser().id;
+    let userId : String = this.user.id;
     this.placeService.unGoToPlace(place.uservisitid)
     .then(result => {
       console.log("success ungo");
@@ -74,11 +77,25 @@ export class PlacesComponent implements OnInit {
 
   }
 
+  public user: SocialUser;
+  private loggedIn: boolean;
+
   ngOnInit(): void {
-    this.currentUser = this.userService.getCurrentUser();
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      
+      console.log(user);
+
+      this.loggedIn = (user != null);
+    }, (error) => {
+      console.log(error);
+      
+    });
+
+    //this.currentUser = this.userService.getCurrentUser();
   }
 
-  @Input() currentUser;
+  
   
 
 

@@ -70,7 +70,7 @@
 
 
 
-                            <div *ngIf="currentUser ">
+                            <div *ngIf="loggedIn">
                                 <button *ngIf="!place.uservisit" class="button is-warning " (click)="goToPlace(place) "> Go!</button>
                                 <button *ngIf="place.uservisit" class="button is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
                             </div>

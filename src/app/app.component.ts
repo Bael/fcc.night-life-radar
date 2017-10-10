@@ -4,6 +4,10 @@ import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
 import { Router } from "@angular/router";
 import { User } from "./user";
+import { AuthService } from "angular4-social-login";
+import { GoogleLoginProvider } from "angular4-social-login";
+import { SocialUser } from "angular4-social-login";
+
 
 @Component({
   selector: 'app-root',
@@ -11,78 +15,45 @@ import { User } from "./user";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit  {
-  constructor (private placeService : PlaceService, private userService : UserService) {}
+  constructor (private placeService : PlaceService, 
+    private userService : UserService,
+     private authService:AuthService) {}
 
-   /*
-  getPlaces(location:String) : void {
+  public user: SocialUser;
+  private loggedIn: boolean;
 
-    console.log(`get places called with location ${location}`);
-    
-    this.placeService.getPlacesByLocation(location)
-      .then(placesJson => {
-        this.places = placesJson;
-        console.log(placesJson);
-      }).catch( reason =>  {
-        console.log("error occured:\n \t " + reason)
-       });
-      
-    
-  }
-
-  gotoDetail(place): void {
-    this.router.navigate(['/cards', place.placeId],  {skipLocationChange: false});
-  }
-
-  goToPlace(place:Place) :void {
-
-    let userId : String = this.userService.getCurrentUserId();
-    this.placeService.goToPlace(place.placeId, userId, new Date())
-    .then(result => {
-      console.log("success go");
-      place.count += 1;
-      place.uservisitid = result;
-      place.uservisit = true;
-
-      
-    }).catch( reason =>  {
-      console.log("error occured:\n \t " + reason)
-     }) ;
-    
-    
-
-  }
-
-
-  notGoToPlace(place:Place) :void {
-    let userId : String = this.userService.getCurrentUserId();
-    this.placeService.unGoToPlace(place.uservisitid)
-    .then(result => {
-      console.log("success ungo");
-      place.count -= 1;
-      place.uservisit = false;
-      place.uservisitid = null;
-
-      
-    }).catch( reason =>  {
-      console.log("error occured:\n \t " + reason)
-     }) ;
-    
-    
-    
-
-  }
-  */
-
+  
 
   ngOnInit(): void {
-    this.currentUser = this.userService.getCurrentUser();
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      
+      console.log(user);
+
+      this.loggedIn = (user != null);
+    }, (error) => {
+      console.log(error);
+      
+    });
+
+    //this.currentUser = this.userService.getCurrentUser();
   }
 
-  @Input() currentUser:User = null;
+  ///@Input() currentUser:User = null;
   
 
   
 
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+ 
+  
+  signOut(): void {
+    this.authService.signOut();
+  }
+
+  /*
   login() :void  {
     let user = new User();
     user.id = "dk";
@@ -91,6 +62,7 @@ export class AppComponent implements OnInit  {
     this.userService.setCurrentUser(user);
     this.currentUser = user;
   }
+  */
   
   places:Place[];
   
