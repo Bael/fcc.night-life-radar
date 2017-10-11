@@ -4,7 +4,6 @@ import { Http, Headers, RequestOptions, HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { PlaceService } from './place.service';
 import { UserService } from './user.service';
-import { PlaceDetailComponent } from './place-detail.component';
 import { RouterModule }   from '@angular/router';
 import { PlacesComponent } from './places.component';
 import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
@@ -21,7 +20,7 @@ export function provideConfig() {
 }
 @NgModule({
   declarations: [
-    AppComponent, PlaceDetailComponent, PlacesComponent
+    AppComponent, PlacesComponent
   ],
   imports: [
     BrowserModule, HttpModule,

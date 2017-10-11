@@ -11,4 +11,5 @@ export interface Place {
     uservisit:Boolean;
     uservisitid:String;
     placeId:String;
+    businessUrl:String;
 }

@@ -2,7 +2,7 @@
     <div class="field has-addons">
         <div class="control is-expanded">
             <input class="input" name="searchStr" #searchStr type="text" placeholder="Enter location e.g. New York" (keyup.enter)="getPlaces(searchStr.value)">
-            <p class="help">location to find places, city and street</p>
+            <p class="help">location to find places, city and street. Search powered by <a href="http://www.yelp.com" target="_blank">Yelp.</a></p>
 
         </div>
         <button class="button is-warning" (click)="getPlaces(searchStr.value)">Radar, search!</button>
@@ -66,6 +66,12 @@
                                     <a class="level-item">
                                         <span>   Address: {{place.location}} </span>
                                     </a>
+
+                                    <figure class="image is-96x96" title="Click to see place page on Yelp">
+                                        <a href="{{place.businessUrl}}" target="_blank">
+                                            <img src="../assets/Yelp_trademark_RGB_outline.png" />
+                                        </a>
+                                    </figure>
 
                                 </div>
                             </nav>

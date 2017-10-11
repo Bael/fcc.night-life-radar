@@ -84,6 +84,7 @@ function getPlacesByLocation(location, callback) {
             phone: item.display_phone,
             uservisit: false,
             uservisitid: "",
+            businessUrl:item.url
             //hours:item.hours,
 
           }
