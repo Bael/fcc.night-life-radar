@@ -9,6 +9,7 @@ import { PlacesComponent } from './places.component';
 import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider } from "angular4-social-login";
  
+/*
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
@@ -18,6 +19,7 @@ let config = new AuthServiceConfig([
 export function provideConfig() {
   return config;
 }
+*/
 @NgModule({
   declarations: [
     AppComponent, PlacesComponent
@@ -29,10 +31,10 @@ export function provideConfig() {
    
   ],
   providers: [PlaceService, UserService, 
-    {
+    /*{
       provide: AuthServiceConfig,
       useFactory: provideConfig
-}],
+}*/],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
