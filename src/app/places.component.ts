@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Place } from "./place";
 import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
-import { AuthService } from "angular4-social-login";
-import { GoogleLoginProvider } from "angular4-social-login";
-import { SocialUser } from "angular4-social-login";
+import { AuthService } from "./auth.service";
+import { GoogleLoginProvider } from "./google.login.provider";
+import { User } from "./user";
 
 @Component({
   selector: 'places',
@@ -60,7 +60,7 @@ export class PlacesComponent implements OnInit {
 
   }
 
-  public user: SocialUser;
+  public user: User;
   private loggedIn: boolean;
 
   ngOnInit(): void {

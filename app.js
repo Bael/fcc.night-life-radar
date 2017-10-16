@@ -5,6 +5,11 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 require('dotenv').config();
 
+var GoogleAuth = require('google-auth-library');
+var auth = new GoogleAuth;
+var client = new auth.OAuth2(process.env.GOOGLE_CLIENT_ID, '', '');
+
+
 var visitRouter = require('./server/routes/visit');
 var app = express();
 app.set('view engine', 'ejs');
@@ -22,6 +27,25 @@ app.get('/cardsdetail/:id', function(req, res, next) {
 app.get('/cards', function(req, res, next) {
   res.sendFile('/public/index.html');
 
+});
+
+app.post('/auth', function(req, res, next) {
+  
+  client.verifyIdToken(
+    req.body.token,
+    process.env.GOOGLE_CLIENT_ID,
+    function(e, login) {
+      if (e) {
+        console.log(e);
+        res.json({OK:false});
+      }
+      else {
+        var payload = login.getPayload();
+        var userid = payload['sub'];
+
+        res.json({OK:true, payload});
+      }
+    });
 });
 
 app.get('*', function(req, res, next) {

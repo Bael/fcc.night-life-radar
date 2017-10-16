@@ -4,9 +4,8 @@ import { PlaceService } from "./place.service";
 import { UserService } from "./user.service";
 import { Router } from "@angular/router";
 import { User } from "./user";
-//import { AuthService } from "angular4-social-login";
-//import { GoogleLoginProvider } from "angular4-social-login";
-//import { SocialUser } from "angular4-social-login";
+import { AuthService } from "./auth.service";
+import { GoogleLoginProvider } from "./google.login.provider";
 
 
 @Component({
@@ -15,9 +14,11 @@ import { User } from "./user";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  user: User;
+  
   constructor(private placeService: PlaceService,
-    private userService: UserService/*,
-  private authService: AuthService*/) { }
+    private userService: UserService,
+  private authService: AuthService) { }
 
   //public user: SocialUser;
   private loggedIn: boolean;
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-    /*
+   
     this.authService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
@@ -33,23 +34,24 @@ export class AppComponent implements OnInit {
       console.log(error);
 
     });
-    */
-  }
- /*
+ }
+ 
   signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.authService.signIn();
   }
 
   signOut(): void {
     this.authService.signOut();
   }
- */
+ 
+  /*
   onSignIn(googleUser) :void
   {
     console.log(googleUser);
     var profile = googleUser.getBasicProfile();
     console.log(profile);
   }
+  */
  // places: Place[];
 
 
