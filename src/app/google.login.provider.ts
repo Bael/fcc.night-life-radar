@@ -40,7 +40,7 @@ export class GoogleLoginProvider {
                 let profile = this.auth2.currentUser.get().getBasicProfile();
 
                 user.id = profile.getId();
-                user.token = this.auth2.currentUser.get().getAuthResponse().id_token;
+                user.token = this.auth2.currentUser.get(true).getAuthResponse().id_token;
                 user.username = profile.getName();
                 user.email = profile.getEmail();
                 user.photoUrl = profile.getImageUrl();
@@ -69,7 +69,7 @@ export class GoogleLoginProvider {
         user.username = profile.getName();
         user.email = profile.getEmail();
         user.photoUrl = profile.getImageUrl();
-        user.token = googleUser.getAuthResponse().id_token;
+        user.token = googleUser.getAuthResponse(true).id_token;
         
 
         resolve(user);

@@ -33,8 +33,8 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.googleLoginProvider.signIn().then((user: User) => {
 
-        console.log(user.token);
         
+        /*
         let body = {token:user.token};
         this.http.post(`/auth`, body)
               .map(res => res.json())
@@ -42,15 +42,19 @@ export class AuthService {
 
                 if(res.OK) {
                     resolve(user);
+                } else {
+                  reject(user);
                 }
               });
                 
-                
+          */
+
       
           
 
           this._user = user;
           this._authState.next(user);
+          resolve(user);
 
         });
     });

@@ -4,7 +4,34 @@ var router = express.Router();
 let visitProvider = require("../providers/visit");
 let placesProvider = require("../providers/place");
 
-router.post('/new', function(req, res, next) {
+var GoogleAuth = require('google-auth-library');
+var auth = new GoogleAuth;
+var client = new auth.OAuth2(process.env.GOOGLE_CLIENT_ID, '', '');
+
+let authMiddleware =function(req, res, next) {
+  
+  client.verifyIdToken(
+    req.body.token,
+    process.env.GOOGLE_CLIENT_ID,
+    function(e, login) {
+      if (e) {
+        console.log(e);
+        
+        
+        res.status(401);
+        res.json({Error:'Unauthorized'});
+        res.end();
+      }
+      else {
+        var payload = login.getPayload();
+        req.body.userId = payload.email;
+        next();
+      }
+    });
+};
+
+
+router.post('/new', authMiddleware, function(req, res, next) {
   let userId = req.body.userId;
   let placeId = req.body.placeId;
   let date = new Date(req.body.date);

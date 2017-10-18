@@ -29,10 +29,10 @@ export class PlaceService {
 
 
 
-  goToPlace(placeId:String, userId:String, date:Date) : Promise<any> {
+  goToPlace(placeId:String, userToken:String, date:Date) : Promise<any> {
     //let requestOptions = new RequestOptions();
     //requestOptions.params.append("location", location);
-    let body = {placeId, userId, date};
+    let body = {placeId, token:userToken, date};
     return new Promise((resolve, reject) => {
       this.http.post(`/visits/new`, body)
         .map(res => res.json())

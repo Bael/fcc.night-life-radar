@@ -23,8 +23,8 @@ export class PlacesComponent implements OnInit {
 
   goToPlace(place: Place): void {
 
-    let userId: String = this.user.id;
-    this.placeService.goToPlace(place.placeId, userId, new Date())
+    let userToken: String = this.user.token;
+    this.placeService.goToPlace(place.placeId, userToken, new Date())
       .then(result => {
         place.count += 1;
         place.uservisitid = result;
