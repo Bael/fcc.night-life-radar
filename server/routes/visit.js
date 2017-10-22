@@ -10,8 +10,13 @@ var client = new auth.OAuth2(process.env.GOOGLE_CLIENT_ID, '', '');
 
 let authMiddleware =function(req, res, next) {
   
+  
+  console.log(JSON.stringify(req.headers));
+  let token = req.header("authorization");
+  console.log(token);
+
   client.verifyIdToken(
-    req.body.token,
+    token,
     process.env.GOOGLE_CLIENT_ID,
     function(e, login) {
       if (e) {

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Place } from "./place";
 import { PlaceService } from "./place.service";
-import { UserService } from "./user.service";
+
 import { AuthService } from "./auth.service";
 import { GoogleLoginProvider } from "./google.login.provider";
 import { User } from "./user";
@@ -12,7 +12,7 @@ import { User } from "./user";
 
 })
 export class PlacesComponent implements OnInit {
-  constructor(private placeService: PlaceService, private userService: UserService, private authService: AuthService) { }
+  constructor(private placeService: PlaceService, private authService: AuthService) { }
 
   selectedPlace: Place = null;
 
@@ -41,6 +41,7 @@ export class PlacesComponent implements OnInit {
         this.places = placesJson;
         //console.log(placesJson);
       }).catch(reason => {
+        
         console.log("error occured:\n \t " + reason)
       });
 

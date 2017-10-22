@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Place } from "./place";
 import { PlaceService } from "./place.service";
-import { UserService } from "./user.service";
+
 import { Router } from "@angular/router";
 import { User } from "./user";
 import { AuthService } from "./auth.service";
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   user: User;
   
   constructor(private placeService: PlaceService,
-    private userService: UserService,
+    
   private authService: AuthService) { }
 
   //public user: SocialUser;

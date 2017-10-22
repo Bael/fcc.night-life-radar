@@ -6,7 +6,9 @@ import { GoogleLoginProvider } from "./google.login.provider";
 import { User } from "./user";
 
 import { Http, Headers, RequestOptions } from '@angular/http';
+import {HttpClient } from '@angular/common/http'
 
+    
 
 @Injectable()
 export class AuthService {
@@ -18,10 +20,18 @@ export class AuthService {
     return this._authState.asObservable();
   }
 
+  getUser():User
+  {
+    return this._user;
+  }
+
+
+
   constructor(private googleLoginProvider:GoogleLoginProvider, private http: Http) {
     
      googleLoginProvider.initialize().then((user: User) => {
         this._user = user;
+        
         this._authState.next(user);
       }).catch((err) => {
         // this._authState.next(null);
@@ -32,27 +42,8 @@ export class AuthService {
   signIn(): Promise<User> {
     return new Promise((resolve, reject) => {
       this.googleLoginProvider.signIn().then((user: User) => {
-
-        
-        /*
-        let body = {token:user.token};
-        this.http.post(`/auth`, body)
-              .map(res => res.json())
-              .subscribe(res => { 
-
-                if(res.OK) {
-                    resolve(user);
-                } else {
-                  reject(user);
-                }
-              });
-                
-          */
-
-      
-          
-
           this._user = user;
+        
           this._authState.next(user);
           resolve(user);
 
@@ -66,6 +57,7 @@ export class AuthService {
           resolve();
 
           this._user = null;
+        
           this._authState.next(null);
         });
       
