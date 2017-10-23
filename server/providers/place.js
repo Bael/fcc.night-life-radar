@@ -7,7 +7,7 @@ function getPlacesByLocation(location, callback) {
     }
   }
   
-  var url = `https://api.yelp.com/v3/businesses/search?location=${location}&categories=nightlife`;
+  var url = `https://api.yelp.com/v3/businesses/search?location=${location}&categories=bars`;
  url = "https://api.yelp.com/v3/graphql";
   let formData = new Object();
   let str = `{ search(term:"nightlife", location:"${location}"), 

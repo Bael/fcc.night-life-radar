@@ -24,9 +24,9 @@ let parseTokenHeader = function (req, onParsedCallBack) {
         onParsedCallBack(e);
       } else {
 
-      var payload = login.getPayload();
-      onParsedCallBack(null, payload);
-    }
+        var payload = login.getPayload();
+        onParsedCallBack(null, payload);
+      }
     });
 };
 
@@ -95,39 +95,30 @@ router.get('/', function (req, res, next) {
     if (e == null && payload != null) {
       userId = payload.email;
     }
-      placesProvider.getPlacesByLocation(location, (err, placesArray) => {
+    placesProvider.getPlacesByLocation(location, (err, placesArray) => {
+      if (err) {
+        console.log(err);
+        res.json(err);
+        res.end;
+      }
+      visitProvider.getVisitedPlacesOnDate(placesArray, new Date(), userId, (err, visitedPlaces) => {
         if (err) {
-          console.log(err);
           res.json(err);
-          res.end;
+          res.status(500);
+          res.end();
+        } else {
+          res.json(visitedPlaces);
+          res.end();
         }
-        visitProvider.getVisitedPlacesOnDate(placesArray, new Date(), userId, (err, visitedPlaces) => {
-          if (err) {
-            res.json(err);
-            res.status(500);
-            res.end();
-          } else {
-            res.json(visitedPlaces);
-            res.end();
-          }
-        });
+      });
 
-      })
-    
+    })
+
 
   })
 
 
 });
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

@@ -1,0 +1,27 @@
+@keyframes cssAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    color: white;
+    font-size: 4em;
+    animation: cssAnimation 3.5s linear infinite;
+    margin-top: 20px;
+}
+
+.loader i {
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.media:hover {
+    background-color: rgba(162, 59, 209, 0.555);
+}

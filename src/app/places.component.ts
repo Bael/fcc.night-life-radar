@@ -8,7 +8,8 @@ import { User } from "./user";
 
 @Component({
   selector: 'places',
-  templateUrl: './places.component.html'
+  templateUrl: './places.component.html',
+  styleUrls:['./places.component.css']
 
 })
 export class PlacesComponent implements OnInit {
@@ -30,16 +31,18 @@ export class PlacesComponent implements OnInit {
       });
   }
 
+  isLoading : boolean = false;
   getPlaces(location: String): void {
     this.location = location;
-
+    this.isLoading = true;
     console.log(`get places called with location ${location}`);
     this.placeService.getPlacesByLocation(location)
       .then(placesJson => {
         this.places = placesJson;
+        this.isLoading = false;
         //console.log(placesJson);
       }).catch(reason => {
-        
+        this.isLoading = false;
         console.log("error occured:\n \t " + reason)
       });
 

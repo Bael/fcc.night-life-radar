@@ -3,24 +3,21 @@
         <div class="control is-expanded">
             <input class="input" name="searchStr" #searchStr type="text" placeholder="Enter location e.g. New York" (keyup.enter)="getPlaces(searchStr.value)">
             <p class="help">location to find places, city and street. Search powered by <a href="http://www.yelp.com" target="_blank">Yelp.</a></p>
-
         </div>
         <button class="button is-warning" (click)="getPlaces(searchStr.value)">Radar, search!</button>
-
-
     </div>
 </div>
 
-<div class="loading"> <i class="fa fa-cog"> </i></div>
+<div [ngClass]="{loader: isLoading, hidden : !isLoading }"> <i class="fa fa-cog"> </i></div>
 
 
-
+<div *ngIf="places == null">
+    <p>nowhere to go yet</p>
+</div>
 <div *ngIf="places != null">
-
     <ul>
         <li *ngFor="let place of places">
             <div class="box">
-
 
                 <article class="media">
                     <div class="media-left">
@@ -29,69 +26,27 @@
                                 <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
                             </figure>
                         </a>
+                        <!--div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">rating</span>
+                                <span class="tag is-info">{{place.rating}}</span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">price</span>
+                                <span class="tag is-success">{{place.price}}</span>
+                            </div>
+                        </div-->
+
                     </div>
                     <div class="media-content">
                         <div class="content">
-
-
-
                             <strong>{{place.name}}</strong>
-
                             <br>
                             <p> {{place.description}} </p>
-
-
-                            <nav class="level is-mobile">
-                                <div class="level-left">
-                                    <a class="level-item">
-                                        <div class="control">
-                                            <div class="tags has-addons">
-                                                <span class="tag is-dark">rating</span>
-                                                <span class="tag is-info">{{place.rating}}</span>
-                                            </div>
-                                        </div>
-
-                                    </a>
-                                    <a class="level-item">
-                                        <div class="control">
-                                            <div class="tags has-addons">
-                                                <span class="tag is-dark">price</span>
-                                                <span class="tag is-success">{{place.price}}</span>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <a class="level-item">
-                                        <p> Phone: {{place.phone}} </p>
-                                    </a>
-                                    <a class="level-item">
-                                        <p> Address: {{place.location}} </p>
-                                    </a>
-
-                                    <figure class="image is-96x96" title="Click to see place page on Yelp">
-                                        <a href="{{place.businessUrl}}" target="_blank">
-                                            <img src="../assets/Yelp_trademark_RGB_outline.png" />
-                                        </a>
-                                    </figure>
-
-                                </div>
-                            </nav>
-
-                            <div class="field is-grouped is-grouped-multiline">
-
-
-
-                            </div>
-
-
-
-
-
-                            <!--button (click)="gotoDetail(place)" class="button is-info">Open place card</button-->
-
                         </div>
                     </div>
-
                     <div class="media-right">
                         <div class="control">
                             <div class="tags has-addons">
@@ -99,19 +54,12 @@
                                 <span class="tag is-success">{{place.count}}</span>
                             </div>
                         </div>
-
-
-
-                        <div *ngIf="loggedIn">
-                            <button *ngIf="!place.uservisit" class="button is-warning " (click)="goToPlace(place) "> Go!</button>
-                            <button *ngIf="place.uservisit" class="button is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
+                        <div *ngIf="loggedIn" class="control">
+                            <button *ngIf="!place.uservisit" class="button control is-warning " (click)="goToPlace(place) "> Go!</button>
+                            <button *ngIf="place.uservisit" class="button control is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
                         </div>
-
                     </div>
-
                 </article>
-
-
 
             </div>
 
