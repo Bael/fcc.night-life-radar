@@ -14,12 +14,8 @@ import { User } from "./user";
 export class PlacesComponent implements OnInit {
   constructor(private placeService: PlaceService, private authService: AuthService) { }
 
-  selectedPlace: Place = null;
 
-  gotoDetail(place): void {
-    //console.log(place);
-    this.selectedPlace = place;
-  }
+  location:String;
 
   goToPlace(place: Place): void {
 
@@ -35,6 +31,8 @@ export class PlacesComponent implements OnInit {
   }
 
   getPlaces(location: String): void {
+    this.location = location;
+
     console.log(`get places called with location ${location}`);
     this.placeService.getPlacesByLocation(location)
       .then(placesJson => {
@@ -69,6 +67,10 @@ export class PlacesComponent implements OnInit {
       this.user = user;
       //console.log(user);
       this.loggedIn = (user != null);
+      if(this.loggedIn && this.location != null){
+        this.getPlaces(this.location)
+      }
+      
     }, (error) => {
       console.log(error);
     });

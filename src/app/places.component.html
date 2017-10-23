@@ -24,10 +24,11 @@
 
                 <article class="media">
                     <div class="media-left">
-                        <figure class="image is-96x96">
-                            <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
-                        </figure>
-
+                        <a href="{{place.businessUrl}}" target="_blank" title="Click to see place page on Yelp">
+                            <figure class="image is-96x96">
+                                <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
+                            </figure>
+                        </a>
                     </div>
                     <div class="media-content">
                         <div class="content">
@@ -39,7 +40,7 @@
                             <br>
                             <p> {{place.description}} </p>
 
-                            <br>
+
                             <nav class="level is-mobile">
                                 <div class="level-left">
                                     <a class="level-item">
@@ -61,10 +62,10 @@
                                     </a>
 
                                     <a class="level-item">
-                                        <span>   Phone: {{place.phone}} </span>
+                                        <p> Phone: {{place.phone}} </p>
                                     </a>
                                     <a class="level-item">
-                                        <span>   Address: {{place.location}} </span>
+                                        <p> Address: {{place.location}} </p>
                                     </a>
 
                                     <figure class="image is-96x96" title="Click to see place page on Yelp">

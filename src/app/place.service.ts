@@ -12,11 +12,9 @@ export class PlaceService {
   constructor(private http: HttpClient) { }
 
   getPlacesByLocation(location:String) : Promise<Place[]> {
-    //let requestOptions = new RequestOptions();
-    //requestOptions.params.append("location", location);
     
     return new Promise((resolve, reject) => {
-      this.http.get(`/visits?location=${location}&userId=dk`)
+      this.http.get(`/visits?location=${location}`)
         .subscribe(res => {
           resolve(res as Place[]);
         }, (err) => {
