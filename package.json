@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "node ./bin/www",
+        "start": "ng build && node ./bin/www",
         "build": "ng build",
         "test": "ng test",
         "servertest": "mocha ./server/tests/*.test.js",
@@ -16,6 +16,7 @@
         "@angular/animations": "^4.2.4",
         "@angular/common": "^4.2.4",
         "@angular/compiler": "^4.2.4",
+        "@angular/compiler-cli": "^4.4.6",
         "@angular/core": "^4.2.4",
         "@angular/forms": "^4.2.4",
         "@angular/http": "^4.2.4",
