@@ -21,6 +21,7 @@
         "@angular/forms": "^4.2.4",
         "@angular/http": "^4.2.4",
         "@angular/platform-browser": "^4.2.4",
+        "@angular/cli": "1.4.9",
         "@angular/platform-browser-dynamic": "^4.2.4",
         "@angular/router": "^4.2.4",
         "body-parser": "^1.18.1",
