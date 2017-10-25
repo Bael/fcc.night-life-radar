@@ -2,14 +2,11 @@
     <div class="field has-addons">
         <div class="control is-expanded">
             <input class="input" name="searchStr" #searchStr type="text" placeholder="Enter location e.g. New York" (keyup.enter)="getPlaces(searchStr.value)">
-            <p class="help">location to find places, city and street. Search powered by <a href="http://www.yelp.com" target="_blank">Yelp.</a></p>
+            <p class="help">Enter location to find places, city and street. Search powered by <a href="http://www.yelp.com" target="_blank">Yelp.</a></p>
         </div>
-        <button class="button is-warning" (click)="getPlaces(searchStr.value)">Radar, search!</button>
+        <button [ngClass]="{'is-loading': isLoading}" class="button is-warning" (click)="getPlaces(searchStr.value)">Radar, search!</button>
     </div>
 </div>
-
-<div [ngClass]="{loader: isLoading, hidden : !isLoading }"> <i class="fa fa-cog"> </i></div>
-
 
 <div *ngIf="places == null">
     <p>nowhere to go yet</p>
@@ -41,24 +38,28 @@
 
                     </div>
                     <div class="media-content">
-                        <div class="content">
-                            <strong>{{place.name}}</strong>
-                            <br>
+                        <div class="control is-expanded">
+                            <div class="field is-grouped is-fullwidth has-addons">
+
+                                <strong class="control is-expanded">{{place.name}}</strong>
+                                <span>   </span>
+                                <div class="control is-medium is-pulled-right">
+                                    <div class="tags has-addons">
+                                        <span class="tag is-dark">going</span>
+                                        <span class="tag is-success">{{place.count}}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="loggedIn" class="is-pulled-right control">
+                                    <button *ngIf="!place.uservisit" class="button is-medium is-warning is-pulled-right " (click)="goToPlace(place) "> Go!</button>
+                                    <button *ngIf="place.uservisit" class="button is-medium is-warning is-pulled-right" (click)="notGoToPlace(place) ">UnGo!</button>
+                                </div>
+                            </div>
+
                             <p> {{place.description}} </p>
                         </div>
                     </div>
-                    <div class="media-right">
-                        <div class="control is-medium">
-                            <div class="tags has-addons">
-                                <span class="tag is-dark">going</span>
-                                <span class="tag is-success">{{place.count}}</span>
-                            </div>
-                        </div>
-                        <div *ngIf="loggedIn" class="control">
-                            <button *ngIf="!place.uservisit" class="button is-medium is-warning " (click)="goToPlace(place) "> Go!</button>
-                            <button *ngIf="place.uservisit" class="button is-medium is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
-                        </div>
-                    </div>
+
                 </article>
 
             </div>
