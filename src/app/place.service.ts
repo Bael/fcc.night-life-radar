@@ -46,6 +46,7 @@ export class PlaceService {
         .subscribe(res => {
           resolve(res);
         }, (err) => {
+          console.log(err);
           reject(err);
         });
     });

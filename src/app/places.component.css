@@ -23,5 +23,9 @@
 }
 
 .media:hover {
-    background-color: rgba(162, 59, 209, 0.555);
+    background-color: rgba(206, 206, 22, 0.555);
+}
+
+.box {
+    padding-bottom: 4em;
 }

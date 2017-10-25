@@ -48,15 +48,15 @@
                         </div>
                     </div>
                     <div class="media-right">
-                        <div class="control">
+                        <div class="control is-medium">
                             <div class="tags has-addons">
                                 <span class="tag is-dark">going</span>
                                 <span class="tag is-success">{{place.count}}</span>
                             </div>
                         </div>
                         <div *ngIf="loggedIn" class="control">
-                            <button *ngIf="!place.uservisit" class="button control is-warning " (click)="goToPlace(place) "> Go!</button>
-                            <button *ngIf="place.uservisit" class="button control is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
+                            <button *ngIf="!place.uservisit" class="button is-medium is-warning " (click)="goToPlace(place) "> Go!</button>
+                            <button *ngIf="place.uservisit" class="button is-medium is-warning " (click)="notGoToPlace(place) ">UnGo!</button>
                         </div>
                     </div>
                 </article>
