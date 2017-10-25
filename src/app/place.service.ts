@@ -32,7 +32,7 @@ export class PlaceService {
     return new Promise((resolve, reject) => {
       this.http.post(`/visits/new`, body)
         .subscribe(res => {
-          resolve(res);
+          resolve(res["ID"]);
         }, (err) => {
           reject(err);
         });

@@ -60,7 +60,7 @@ router.post('/new', authMiddleware, function (req, res, next) {
 
     } else {
       res.status(200);
-      res.json(rowId)
+      res.json({ID:rowId})
     }
     res.end();
   })
@@ -74,7 +74,7 @@ router.delete('/:visitid', authMiddleware, function (req, res, next) {
       res.status(500);
     } else {
       res.status(200);
-      res.json("OK")
+      res.json({status:"OK"})
     }
     res.end();
   })
@@ -85,7 +85,7 @@ router.get('/', function (req, res, next) {
   let location = req.query.location;
   if (location == null) {
     res.status(400);
-    res.json("Location or user are not specified");
+    res.json({Error:"Location or user are not specified"});
     res.end();
     return;
   }

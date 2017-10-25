@@ -18,19 +18,7 @@ export class PlacesComponent implements OnInit {
 
   location:String;
 
-  goToPlace(place: Place): void {
-
-    let userToken: String = this.user.token;
-    this.placeService.goToPlace(place.placeId, userToken, new Date())
-      .then(result => {
-        place.count += 1;
-        place.uservisitid = result;
-        place.uservisit = true;
-      }).catch(reason => {
-        console.log("error occured:\n \t " + reason)
-      });
-  }
-
+  
   isLoading : boolean = false;
   getPlaces(location: String): void {
     this.location = location;
@@ -47,7 +35,24 @@ export class PlacesComponent implements OnInit {
       });
 
 
-  }
+  
+  
+    }
+
+    goToPlace(place: Place): void {
+      
+          let userToken: String = this.user.token;
+          this.placeService.goToPlace(place.placeId, userToken, new Date())
+            .then(result => {
+              place.count += 1;
+              console.log(result);
+              place.uservisitid = result;
+              place.uservisit = true;
+            }).catch(reason => {
+              console.log("error occured:\n \t " + reason)
+            });
+        }
+      
   notGoToPlace(place: Place): void {
     let userId: String = this.user.id;
     this.placeService.unGoToPlace(place.uservisitid)
