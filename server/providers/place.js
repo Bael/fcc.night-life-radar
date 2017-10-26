@@ -58,6 +58,10 @@ function getPlacesByLocation(location, callback) {
           return callback(new Error("no data about places"));
         }
 
+        if (!rawresult.data.search) {
+          return callback(new Error("no data about places"));
+        }
+
         let rawarray = rawresult.data.search.business;
         
         let placesarray = rawarray.map(item => {

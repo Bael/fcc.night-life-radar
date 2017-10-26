@@ -31,7 +31,13 @@ export class PlacesComponent implements OnInit {
         //console.log(placesJson);
       }).catch(reason => {
         this.isLoading = false;
-        console.log("error occured:\n \t " + reason)
+        console.log("error occured:\n \t " + reason.toString());
+        if (this.places) {
+          while (this.places.length) {
+            this.places.pop();
+          }
+        }
+        
       });
 
 
