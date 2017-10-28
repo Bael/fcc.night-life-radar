@@ -8,8 +8,8 @@
     </div>
 </div>
 
-<div *ngIf="places == null">
-    <p>nowhere to go yet</p>
+<div *ngIf="!(places != null && places.length > 0)">
+    <p>no places found yet</p>
 </div>
 <div *ngIf="places != null">
     <ul>
@@ -23,6 +23,14 @@
                                 <img *ngIf="place.url" src="{{place.url}}" alt="picture of {{place.name}}" />
                             </figure>
                         </a>
+
+                        <div class="control is-large ">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">going</span>
+                                <span class="tag is-success">{{place.count}}</span>
+                            </div>
+                        </div>
+
                         <!--div class="control">
                             <div class="tags has-addons">
                                 <span class="tag is-dark">rating</span>
@@ -42,13 +50,6 @@
                             <div class="field is-grouped is-fullwidth has-addons">
 
                                 <strong class="control is-expanded">{{place.name}}</strong>
-                                <span>   </span>
-                                <div class="control is-medium is-pulled-right">
-                                    <div class="tags has-addons">
-                                        <span class="tag is-dark">going</span>
-                                        <span class="tag is-success">{{place.count}}</span>
-                                    </div>
-                                </div>
 
                                 <div *ngIf="loggedIn" class="is-pulled-right control">
                                     <button *ngIf="!place.uservisit" class="button is-medium is-warning is-pulled-right " (click)="goToPlace(place) "> Go!</button>

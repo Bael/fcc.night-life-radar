@@ -6,9 +6,9 @@ function getPlacesByLocation(location, callback) {
       bearer: process.env.ACCESS_TOKEN
     }
   }
-  
+
   var url = `https://api.yelp.com/v3/businesses/search?location=${location}&categories=bars`;
- url = "https://api.yelp.com/v3/graphql";
+  url = "https://api.yelp.com/v3/graphql";
   let formData = new Object();
   let str = `{ search(term:"nightlife", location:"${location}"), 
   
@@ -23,55 +23,50 @@ function getPlacesByLocation(location, callback) {
                 photos, location {city, address1},
                 reviews {text, rating, time_created, url}}}}`;
 
-  formData.auth = { 'auth': {
-    bearer: process.env.ACCESS_TOKEN
-  }};
+  formData.auth = {
+    'auth': {
+      bearer: process.env.ACCESS_TOKEN
+    }
+  };
 
   let options = {
-    url:"https://api.yelp.com/v3/graphql",
-    auth:  {
+    url: "https://api.yelp.com/v3/graphql",
+    auth: {
       bearer: process.env.ACCESS_TOKEN
     },
     headers: {
-      "content-type":'application/graphql'
+      "content-type": 'application/graphql'
     },
-    body:str,
-    method:"POST",
-    
+    body: str,
+    method: "POST",
+
 
 
   };
 
   formData.query = str;
   request.post(options,
-  //request.get(url, auth,
+    //request.get(url, auth,
     function (error, result) {
       if (error) {
-        console.log(error);
         callback(error);
       } else {
 
-        console.log(result);
-
         let rawresult = JSON.parse(result.body);
-        if(!rawresult) {
-          return callback(new Error("no data about places"));
-        }
-
-        if (!rawresult.data.search) {
-          return callback(new Error("no data about places"));
+        if (!rawresult || !rawresult.data.search) {
+          return callback("No data about places");
         }
 
         let rawarray = rawresult.data.search.business;
-        
+
         let placesarray = rawarray.map(item => {
           let review = "";
           if (item.reviews && item.reviews.length > 0) {
             review = item.reviews[0].text;
           }
           let smallImageUrl = "";
-          
-          if(item.photos && item.photos.length>0) {
+
+          if (item.photos && item.photos.length > 0) {
             smallImageUrl = new String(item.photos[0]).replace("o.jpg", "ms.jpg");
           }
 
@@ -84,11 +79,11 @@ function getPlacesByLocation(location, callback) {
             url: smallImageUrl,
             price: item.price,
             rating: item.rating,
-            location: item.location.city+ ", "+item.location.address1,
+            location: item.location.city + ", " + item.location.address1,
             phone: item.display_phone,
             uservisit: false,
             uservisitid: "",
-            businessUrl:item.url
+            businessUrl: item.url
             //hours:item.hours,
 
           }

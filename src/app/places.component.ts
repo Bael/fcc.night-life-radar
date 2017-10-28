@@ -28,15 +28,11 @@ export class PlacesComponent implements OnInit {
       .then(placesJson => {
         this.places = placesJson;
         this.isLoading = false;
-        //console.log(placesJson);
-      }).catch(reason => {
+        
+      }) .catch(reason => {                          
         this.isLoading = false;
         console.log("error occured:\n \t " + reason.toString());
-        if (this.places) {
-          while (this.places.length) {
-            this.places.pop();
-          }
-        }
+        this.places = [];
         
       });
 

@@ -60,7 +60,7 @@ router.post('/new', authMiddleware, function (req, res, next) {
 
     } else {
       res.status(200);
-      res.json({ID:rowId})
+      res.json({ ID: rowId })
     }
     res.end();
   })
@@ -74,7 +74,7 @@ router.delete('/:visitid', authMiddleware, function (req, res, next) {
       res.status(500);
     } else {
       res.status(200);
-      res.json({status:"OK"})
+      res.json({ status: "OK" })
     }
     res.end();
   })
@@ -85,7 +85,7 @@ router.get('/', function (req, res, next) {
   let location = req.query.location;
   if (location == null) {
     res.status(400);
-    res.json({Error:"Location or user are not specified"});
+    res.json({ Error: "Location or user are not specified" });
     res.end();
     return;
   }
@@ -97,23 +97,22 @@ router.get('/', function (req, res, next) {
     }
     placesProvider.getPlacesByLocation(location, (err, placesArray) => {
       if (err) {
-        console.log(err);
-        res.json({Error:err});
         res.status(404);
+        res.json({ Error: err });
         res.end();
       }
       else {
-      visitProvider.getVisitedPlacesOnDate(placesArray, new Date(), userId, (err, visitedPlaces) => {
-        if (err) {
-          res.json(err);
-          res.status(500);
-          res.end();
-        } else {
-          res.json(visitedPlaces);
-          res.end();
-        }
-      });
-    }
+        visitProvider.getVisitedPlacesOnDate(placesArray, new Date(), userId, (err, visitedPlaces) => {
+          if (err) {
+            res.status(500);
+            res.json(err);
+            res.end();
+          } else {
+            res.json(visitedPlaces);
+            res.end();
+          }
+        });
+      }
 
     })
 

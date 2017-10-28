@@ -18,6 +18,7 @@ export class PlaceService {
         .subscribe(res => {
           resolve(res as Place[]);
         }, (err) => {
+          console.log("err occured: " + err);
           reject(err);
         });
     });
